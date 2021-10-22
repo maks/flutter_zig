@@ -25,7 +25,7 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    final zig = ZigDemoPlugin();
+    final zig = FlutterZigPlugin();
     // sync call
     final response = zig.fib(7);
 

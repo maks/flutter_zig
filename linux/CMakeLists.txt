@@ -20,6 +20,6 @@ target_link_libraries(${PLUGIN_NAME} PRIVATE PkgConfig::GTK)
 
 # List of absolute paths to libraries that should be bundled with the plugin
 set(flutter_zig_bundled_libraries
-  ""
+  "${CMAKE_CURRENT_SOURCE_DIR}/../platform/linux_x64/libsample.so"
   PARENT_SCOPE
 )

@@ -1,13 +1,27 @@
+import 'dart:ffi';
 
-import 'dart:async';
+import 'dart:io';
 
-import 'package:flutter/services.dart';
+// Fib function from zig
+typedef FibFunc = Int32 Function(Int32 a);
+typedef Fib = int Function(int a);
 
-class FlutterZig {
-  static const MethodChannel _channel = MethodChannel('flutter_zig');
+class FlutterZigPlugin {
+  late final DynamicLibrary dylib;
 
-  static Future<String?> get platformVersion async {
-    final String? version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
+  FlutterZigPlugin() {
+    const libName = 'sample';
+    if (Platform.environment.containsKey('FLUTTER_TEST')) {
+      dylib = DynamicLibrary.open('linux/lib$libName.so');
+    } else {
+      dylib = Platform.isIOS ? DynamicLibrary.process() : DynamicLibrary.open('lib$libName.so');
+    }
+  }
+
+  int fib(int num) {
+    final fibPointer = dylib.lookup<NativeFunction<FibFunc>>('fibzig');
+    final fib = fibPointer.asFunction<Fib>();
+    final result = fib(num);
+    return result;
   }
 }

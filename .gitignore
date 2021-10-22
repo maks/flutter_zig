@@ -27,3 +27,6 @@
 .dart_tool/
 .packages
 build/
+
+platform/zig-cache
+platform/libsample.so

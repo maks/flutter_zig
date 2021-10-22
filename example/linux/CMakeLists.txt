@@ -114,3 +114,17 @@ if(NOT CMAKE_BUILD_TYPE MATCHES "Debug")
   install(FILES "${AOT_LIBRARY}" DESTINATION "${INSTALL_BUNDLE_LIB_DIR}"
     COMPONENT Runtime)
 endif()
+
+
+# Link bundled libraries from plugins into main executable to enable dlopen
+# with only library name.
+# Will NOT be needed once: https://github.com/flutter/engine/pull/28525 lands in Flutter channel we are using
+foreach(plugin ${FLUTTER_PLUGIN_LIST})
+  if(${plugin}_bundled_libraries)
+    target_link_libraries(
+      ${BINARY_NAME}
+      PRIVATE
+      ${${plugin}_bundled_libraries}
+    )
+  endif()
+endforeach(plugin)
