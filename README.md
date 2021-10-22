@@ -28,7 +28,8 @@ After each of the above zig commands, move the newly built .so to correct locati
 
 For desktop Linux:
 ```
-mv libsample.so ../linux/
+>cd platform
+>mv libsample.so linux_64/
 ```
 
 For Android arm64:
